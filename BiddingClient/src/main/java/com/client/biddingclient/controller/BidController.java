@@ -25,11 +25,14 @@ public class BidController {
 
     @GetMapping("/bid")
     public ResponseEntity<Mono<BidDTO>> makeBid() {
+
+        // todo has to be moved outside
         long delay = Long.parseLong(this.delay);
         if (delay > 500)
             throw new RuntimeException("Greater than 500mil sec");
         if (delay <= 0)
             throw new RuntimeException("delay cannot be less than or equal to zero");
+
 
         Mono<BidDTO> bidDTO = Mono.just(biddingService.createBid());
         try {

@@ -1,2 +1,4 @@
-
-
+application:
+  server:
+    url: "http://localhost:8080"
+    endpoint: "/api/v1/register/bidder"

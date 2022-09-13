@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 public class ServerPortCustomizer
         implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
     @Value("${port}")
-    private String SERVERPORTNO;
+    private String port;
     @Override
     public void customize(ConfigurableWebServerFactory factory) {
-        factory.setPort(Integer.parseInt(SERVERPORTNO));
+        factory.setPort(Integer.parseInt(port));
     }
 }

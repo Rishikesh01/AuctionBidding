@@ -8,6 +8,14 @@ import lombok.Data;
  */
 @Data
 public class BidDTO {
-        private String bidder_id;
-        private int price;
+
+    // todo create a new module - shared-dto
+    // and move there your dto classes which you will use in different modules.
+
+    // client
+    // service/server
+    // shared-dto
+
+    private String bidder_id;
+    private int price;
 }
