@@ -9,6 +9,5 @@ import lombok.Data;
 @Data
 public class BidderRegisterDTO {
     private String bidder_id;
-    private String addr;
     private int port;
 }

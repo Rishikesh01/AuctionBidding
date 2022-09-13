@@ -2,11 +2,11 @@ package com.demo.auctionbidding.service;
 
 import com.demo.auctionbidding.dto.BidderRegisterDTO;
 import com.demo.auctionbidding.dto.BiddingDTO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -18,14 +18,19 @@ import java.util.stream.Collectors;
  */
 
 @Service
-@RequiredArgsConstructor
 public class AuctionService {
     private static final String QUERY_BID_ENDPOINT = "/v1/bid";
+    private static final String URL = "http://localhost:";
     private final WebClient webClient;
     private final HashMap<BidderRegisterDTO, String> bidderRegisterDTOSet = new HashMap<>();
 
+    public AuctionService() {
+        this.webClient = WebClient.builder().build();
+    }
+
     public void setBidderRegisterDTOMap(BidderRegisterDTO bidderRegisterDTO) {
-        bidderRegisterDTOSet.put(bidderRegisterDTO, bidderRegisterDTO.getAddr() + ":" + bidderRegisterDTO.getPort() + QUERY_BID_ENDPOINT);
+        System.out.println(bidderRegisterDTO);
+        bidderRegisterDTOSet.put(bidderRegisterDTO, URL + bidderRegisterDTO.getPort() + QUERY_BID_ENDPOINT);
     }
 
     public BiddingDTO getBestBid(String auction_ID) {
@@ -45,6 +50,6 @@ public class AuctionService {
 
     private Mono<BiddingDTO> makeQuery(String uri) {
         return webClient
-                .get().uri(uri).retrieve().bodyToMono(BiddingDTO.class);
+                .get().uri(uri).retrieve().bodyToMono(BiddingDTO.class).timeout(Duration.ofMillis(200));
     }
 }
