@@ -26,16 +26,22 @@ public class AuctioneerController {
 
     @PostMapping("/register/bidder")
     public ResponseEntity<HttpStatus> registerBidder(@RequestBody BidderRegisterDTO bidderRegisterDTO) {
+        System.out.println(bidderRegisterDTO);
         auctionService.setBidderRegisterDTOMap(bidderRegisterDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/auction")
     public ResponseEntity<Object> auction(@RequestBody AdToAuctionDTO adToAuctionDTO) {
-        BiddingDTO biddingDTO = auctionService.getBestBid(adToAuctionDTO.getAuction_ID());
-        if (biddingDTO == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No clients found");
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(biddingDTO);
+        if (adToAuctionDTO != null) {
+            if (!auctionService.areRegisteredBiddersZero()) {
+                BiddingDTO biddingDTO = auctionService.getBestBid();
+                if (biddingDTO != null)
+                    return ResponseEntity.status(HttpStatus.ACCEPTED).body(biddingDTO);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No clients found");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please send auction id");
     }
 
 

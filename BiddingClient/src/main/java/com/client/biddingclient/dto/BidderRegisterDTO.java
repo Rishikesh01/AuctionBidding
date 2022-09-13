@@ -11,5 +11,5 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class BidderRegisterDTO {
     private final String bidder_id;
-    private final int port;
+    private final String port;
 }
