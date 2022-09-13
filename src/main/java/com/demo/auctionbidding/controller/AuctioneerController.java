@@ -7,7 +7,10 @@ import com.demo.auctionbidding.service.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Rishikesh
@@ -28,8 +31,10 @@ public class AuctioneerController {
     }
 
     @PostMapping("/auction")
-    public ResponseEntity<BiddingDTO> auction(@RequestBody AdToAuctionDTO adToAuctionDTO) {
-        BiddingDTO biddingDTO = new BiddingDTO();
+    public ResponseEntity<Object> auction(@RequestBody AdToAuctionDTO adToAuctionDTO) {
+        BiddingDTO biddingDTO = auctionService.getBestBid(adToAuctionDTO.getAuction_ID());
+        if (biddingDTO == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No clients found");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(biddingDTO);
     }
 

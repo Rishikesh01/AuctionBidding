@@ -20,13 +20,12 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AuctionService {
+    private static final String QUERY_BID_ENDPOINT = "/v1/bid";
     private final WebClient webClient;
     private final HashMap<BidderRegisterDTO, String> bidderRegisterDTOSet = new HashMap<>();
 
     public void setBidderRegisterDTOMap(BidderRegisterDTO bidderRegisterDTO) {
-        StringBuilder uri = new StringBuilder();
-        uri.append(bidderRegisterDTO.getAddr()).append(":").append(bidderRegisterDTO.getPort());
-        bidderRegisterDTOSet.put(bidderRegisterDTO, uri.toString());
+        bidderRegisterDTOSet.put(bidderRegisterDTO, bidderRegisterDTO.getAddr() + ":" + bidderRegisterDTO.getPort() + QUERY_BID_ENDPOINT);
     }
 
     public BiddingDTO getBestBid(String auction_ID) {
@@ -44,7 +43,7 @@ public class AuctionService {
         return null;
     }
 
-    public Mono<BiddingDTO> makeQuery(String uri) {
+    private Mono<BiddingDTO> makeQuery(String uri) {
         return webClient
                 .get().uri(uri).retrieve().bodyToMono(BiddingDTO.class);
     }
