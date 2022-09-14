@@ -1,5 +1,6 @@
 package com.auction.shared.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Data
 public class BidderRegisterDTO {
-    private final String bidder_id;
+    @JsonProperty(value = "bidder_id")
+    private final String bidderId;
+    @JsonProperty(value = "bidder_address")
+    private final String bidderAddress;
     private final String port;
 }

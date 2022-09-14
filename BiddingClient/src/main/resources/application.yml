@@ -1,4 +1,5 @@
 application:
   server:
-    url: "http://localhost:8080"
+    url: ${SERVER_URL_PREFIX}
     endpoint: "/api/v1/register/bidder"
+    bidderURL: ${BIDDER_URL_PREFIX}

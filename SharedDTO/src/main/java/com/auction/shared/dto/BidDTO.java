@@ -1,5 +1,6 @@
 package com.auction.shared.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -8,14 +9,7 @@ import lombok.Data;
  */
 @Data
 public class BidDTO {
-
-    // todo create a new module - shared-dto
-    // and move there your dto classes which you will use in different modules.
-
-    // client
-    // service/server
-    // shared-dto
-
-    private String bidder_id;
+    @JsonProperty(value = "bidder_id")
+    private String bidderId;
     private int price;
 }

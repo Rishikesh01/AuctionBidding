@@ -13,5 +13,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("application.server")
 public class BidderClientConfiguration {
     private String url;
+    private String bidderURL;
     private String endpoint;
 }

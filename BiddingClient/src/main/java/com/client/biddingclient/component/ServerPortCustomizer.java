@@ -14,6 +14,7 @@ public class ServerPortCustomizer
         implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
     @Value("${port}")
     private String port;
+
     @Override
     public void customize(ConfigurableWebServerFactory factory) {
         factory.setPort(Integer.parseInt(port));

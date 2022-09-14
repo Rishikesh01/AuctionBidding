@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
-;
 
 /**
  * @author Rishikesh
@@ -42,10 +41,6 @@ public class AuctionService {
 
     public void addBidder(BidderRegisterDTO bidderRegisterDTO) {
         storageFacade.registerBidder(bidderRegisterDTO);
-    }
-
-    public boolean hasRegisteredBidder() {
-        return !storageFacade.isEmpty();
     }
 
     public Map<BidderRegisterDTO, String> getAllRegisteredBidders() {

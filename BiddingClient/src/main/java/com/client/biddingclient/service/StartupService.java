@@ -28,10 +28,12 @@ public class StartupService {
     private String bidderID;
     @Value("${port}")
     private String port;
+    @Value("${delay}")
+    private String delay;
 
     @EventListener(ApplicationReadyEvent.class)
     public void register() {
-        BidderRegisterDTO bidderRegisterDTO = new BidderRegisterDTO(bidderID, port);
+        BidderRegisterDTO bidderRegisterDTO = new BidderRegisterDTO(bidderID, clientConfiguration.getBidderURL(), port);
         webClient.post().uri(clientConfiguration.getEndpoint())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -41,7 +43,16 @@ public class StartupService {
     @EventListener(ApplicationReadyEvent.class)
     public void warmUp() {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getForEntity("http://localhost:" + port+"/v1/bid", BidDTO.class);
+        restTemplate.getForEntity(clientConfiguration.getBidderURL() + port + "/v1/bid", BidDTO.class);
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void checkDelayLimit() {
+        long delay = Long.parseLong(this.delay);
+        if (delay > 500)
+            throw new RuntimeException("Greater than 500mil sec");
+        if (delay <= 0)
+            throw new RuntimeException("delay cannot be less than or equal to zero");
     }
 
 

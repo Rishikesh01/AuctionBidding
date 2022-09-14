@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 /**
  * @author Rishikesh
@@ -29,14 +30,14 @@ public class AuctioneerController {
     }
 
     @PostMapping("/auction")
-    public ResponseEntity<Object> auction(@RequestBody AdToAuctionDTO adToAuctionDTO) {
-        if (adToAuctionDTO==null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please send auction id1");
+    public ResponseEntity<Mono<Object>> auction(@RequestBody AdToAuctionDTO adToAuctionDTO) {
+        if (adToAuctionDTO == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Mono.just("please send auction id1"));
         }
 
         return auctionService.getBestBid()
-                .map(biddingDTO -> ResponseEntity.status(HttpStatus.ACCEPTED).body(biddingDTO))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("No clients found"));
+                .map(biddingDTO -> ResponseEntity.status(HttpStatus.ACCEPTED).body(Mono.just(biddingDTO)))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(Mono.just("No clients found")));
     }
 
     @GetMapping("/end-points/list")

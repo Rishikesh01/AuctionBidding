@@ -4,5 +4,5 @@ server:
 
 application:
   bidder-client:
-    url: "http://localhost:"
+    bidderURL: ${BIDDER_URL_PREFIX}
     endpoint: "/v1/bid"

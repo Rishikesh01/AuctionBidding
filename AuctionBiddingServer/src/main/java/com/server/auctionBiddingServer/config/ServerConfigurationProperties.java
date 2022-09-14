@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "application.bidder-client")
 public class ServerConfigurationProperties {
-    private String url;
+    private String bidderURL;
     private String endpoint;
 }

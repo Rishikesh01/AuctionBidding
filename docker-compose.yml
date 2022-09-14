@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  auction_server:
+    build: ./AuctionBiddingServer
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  bidder_1:
+    build: ./BiddingClient
+    command: java -jar BiddingClient.jar --delay=10 --port=8000 --name=tim
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    depends_on:
+      - auction_server
+
+  bidder_2:
+    build: ./BiddingClient
+    command: java -jar BiddingClient.jar --delay=100 --port=8001 --name=tim1
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
+    depends_on:
+      - auction_server

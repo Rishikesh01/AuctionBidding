@@ -18,7 +18,7 @@ public class BiddingService {
 
     public BidDTO createBid() {
         BidDTO bidDTO = new BidDTO();
-        bidDTO.setBidder_id(bidderId);
+        bidDTO.setBidderId(bidderId);
         bidDTO.setPrice(bidPriceGenerator());
         return bidDTO;
     }

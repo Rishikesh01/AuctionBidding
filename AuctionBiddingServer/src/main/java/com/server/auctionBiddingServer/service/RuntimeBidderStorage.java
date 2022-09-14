@@ -19,7 +19,7 @@ public class RuntimeBidderStorage implements BidderStorageFacade {
 
     @Override
     public void registerBidder(BidderRegisterDTO bidderRegisterDTO) {
-        store.put(bidderRegisterDTO, properties.getUrl() + bidderRegisterDTO.getPort() + properties.getEndpoint());
+        store.put(bidderRegisterDTO, bidderRegisterDTO.getBidderAddress() + bidderRegisterDTO.getPort() + properties.getEndpoint());
     }
 
     @Override
