@@ -51,8 +51,8 @@ public class StartupService {
         long delay = Long.parseLong(this.delay);
         if (delay > 500)
             throw new RuntimeException("Greater than 500mil sec");
-        if (delay <= 0)
-            throw new RuntimeException("delay cannot be less than or equal to zero");
+        if (delay < 10)
+            throw new RuntimeException("delay cannot be less 10mil sec");
     }
 
 
