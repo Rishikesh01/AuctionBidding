@@ -1,6 +1,6 @@
 package com.client.biddingclient.service;
 
-import com.client.biddingclient.dto.BidDTO;
+import com.auction.shared.dto.BidDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

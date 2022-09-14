@@ -8,9 +8,9 @@ dependencyManagement {
         mavenBom SpringBootPlugin.BOM_COORDINATES
     }
 }
-
 dependencies {
     implementation project(":SharedDTO")
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

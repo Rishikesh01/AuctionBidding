@@ -1,6 +1,6 @@
 package com.client.biddingclient.controller;
 
-import com.client.biddingclient.dto.BidDTO;
+import com.auction.shared.dto.BidDTO;
 import com.client.biddingclient.service.BiddingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

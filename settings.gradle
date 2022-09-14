@@ -1,1 +1,5 @@
 rootProject.name = 'AuctionBidding'
+include 'AuctionBiddingServer'
+include 'BiddingClient'
+include 'SharedDTO'
+

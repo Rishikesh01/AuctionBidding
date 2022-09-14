@@ -1,9 +1,9 @@
 package com.client.biddingclient.service;
 
+import com.auction.shared.dto.BidderRegisterDTO;
 import com.client.biddingclient.config.BidderClientConfiguration;
 import com.client.biddingclient.controller.BidController;
-import com.client.biddingclient.dto.BidderRegisterDTO;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -17,7 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  * @project AuctionBidding
  */
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StartupService {
 
     private final WebClient webClient;
@@ -30,13 +30,14 @@ public class StartupService {
     private String port;
 
     @EventListener(ApplicationReadyEvent.class)
-    public void  register() {
+    public void register() {
         BidderRegisterDTO bidderRegisterDTO = new BidderRegisterDTO(bidderID, port);
         webClient.post().uri(clientConfiguration.getEndpoint())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(bidderRegisterDTO)).exchange().block();
-
         bidController.makeBid();
     }
+
+
 }

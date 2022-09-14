@@ -1,0 +1,8 @@
+server:
+  servlet:
+    context-path: /api
+
+application:
+  bidder-client:
+    url: "http://localhost:"
+    endpoint: "/v1/bid"
