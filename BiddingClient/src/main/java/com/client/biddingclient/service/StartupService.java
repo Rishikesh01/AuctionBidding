@@ -33,7 +33,7 @@ public class StartupService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void register() {
-        BidderRegisterDTO bidderRegisterDTO = new BidderRegisterDTO(bidderID, clientConfiguration.getBidderURL(), port);
+        BidderRegisterDTO bidderRegisterDTO = new BidderRegisterDTO(bidderID, clientConfiguration.getBidderURL() + ":", port);
         webClient.post().uri(clientConfiguration.getEndpoint())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -43,7 +43,7 @@ public class StartupService {
     @EventListener(ApplicationReadyEvent.class)
     public void warmUp() {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getForEntity(clientConfiguration.getBidderURL() + port + "/v1/bid", BidDTO.class);
+        restTemplate.getForEntity(clientConfiguration.getBidderURL() + ":" + port + "/v1/bid", BidDTO.class);
     }
 
     @EventListener(ApplicationReadyEvent.class)

@@ -6,6 +6,8 @@ services:
     ports:
       - "8080:8080"
     restart: unless-stopped
+    environment:
+      - AUCTIONEER_HOST=http://localhost:8080
 
   bidder_1:
     build: ./BiddingClient
@@ -15,6 +17,9 @@ services:
     restart: unless-stopped
     depends_on:
       - auction_server
+    environment:
+      - SERVER_URL_PREFIX=http://auction_server:8080
+      - BIDDER_URL_PREFIX = http://bidder_1
 
   bidder_2:
     build: ./BiddingClient
@@ -24,3 +29,6 @@ services:
     restart: unless-stopped
     depends_on:
       - auction_server
+    environment:
+      - SERVER_URL_PREFIX=http://auction_server:8080
+      - BIDDER_URL_PREFIX=http://bidder_2
