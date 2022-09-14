@@ -30,3 +30,16 @@ services:
     environment:
       - SERVER_URL_PREFIX=http://auctionserver:8080
       - BIDDER_URL_PREFIX=http://bidder2
+
+
+  bidder3:
+    build: ./BiddingClient
+    command: java -jar BidClient.jar --delay=150 --port=8001 --name=tim1
+    ports:
+      - "8002:8002"
+    restart: unless-stopped
+    depends_on:
+      - auctionserver
+    environment:
+      - SERVER_URL_PREFIX=http://auctionserver:8080
+      - BIDDER_URL_PREFIX=http://bidder3
