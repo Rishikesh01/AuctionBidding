@@ -35,6 +35,7 @@ public class AuctionService {
         try {
             return restTemplate.getForEntity(uri, BidDTO.class).getBody();
         } catch (ResourceAccessException e) {
+            e.printStackTrace();
             return null;
         }
     }

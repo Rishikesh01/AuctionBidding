@@ -6,4 +6,4 @@ RUN  apk update \
   && rm -rf /var/cache/apk/
 
 ARG JAR_FILE=build/libs/BiddingClient.jar
-COPY ${JAR_FILE} BiddingClient.jar
+COPY ${JAR_FILE} BidClient.jar

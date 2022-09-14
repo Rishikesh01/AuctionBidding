@@ -1,34 +1,32 @@
 version: "3"
 
 services:
-  auction_server:
+  auctionserver:
     build: ./AuctionBiddingServer
     ports:
       - "8080:8080"
     restart: unless-stopped
-    environment:
-      - AUCTIONEER_HOST=http://localhost:8080
 
-  bidder_1:
+  bidder1:
     build: ./BiddingClient
-    command: java -jar BiddingClient.jar --delay=10 --port=8000 --name=tim
+    command: java -jar BidClient.jar --delay=10 --port=8000 --name=tim
     ports:
       - "8000:8000"
     restart: unless-stopped
     depends_on:
-      - auction_server
+      - auctionserver
     environment:
-      - SERVER_URL_PREFIX=http://auction_server:8080
-      - BIDDER_URL_PREFIX = http://bidder_1
+      - SERVER_URL_PREFIX=http://auctionserver:8080
+      - BIDDER_URL_PREFIX=http://bidder1
 
-  bidder_2:
+  bidder2:
     build: ./BiddingClient
-    command: java -jar BiddingClient.jar --delay=100 --port=8001 --name=tim1
+    command: java -jar BidClient.jar --delay=100 --port=8001 --name=tim1
     ports:
       - "8001:8001"
     restart: unless-stopped
     depends_on:
-      - auction_server
+      - auctionserver
     environment:
-      - SERVER_URL_PREFIX=http://auction_server:8080
-      - BIDDER_URL_PREFIX=http://bidder_2
+      - SERVER_URL_PREFIX=http://auctionserver:8080
+      - BIDDER_URL_PREFIX=http://bidder2

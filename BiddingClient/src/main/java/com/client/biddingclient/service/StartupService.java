@@ -43,7 +43,7 @@ public class StartupService {
     @EventListener(ApplicationReadyEvent.class)
     public void warmUp() {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getForEntity(clientConfiguration.getBidderURL() + ":" + port + "/v1/bid", BidDTO.class);
+        restTemplate.getForEntity("http://localhost:" + port + "/v1/bid", BidDTO.class);
     }
 
     @EventListener(ApplicationReadyEvent.class)
