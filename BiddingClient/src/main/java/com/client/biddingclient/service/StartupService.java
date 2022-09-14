@@ -1,14 +1,15 @@
 package com.client.biddingclient.service;
 
+import com.auction.shared.dto.BidDTO;
 import com.auction.shared.dto.BidderRegisterDTO;
 import com.client.biddingclient.config.BidderClientConfiguration;
-import com.client.biddingclient.controller.BidController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -21,9 +22,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class StartupService {
 
     private final WebClient webClient;
-
     private final BidderClientConfiguration clientConfiguration;
-    private final BidController bidController;
+
     @Value("${name}")
     private String bidderID;
     @Value("${port}")
@@ -36,7 +36,12 @@ public class StartupService {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(bidderRegisterDTO)).exchange().block();
-        bidController.makeBid();
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void warmUp() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getForEntity("http://localhost:" + port+"/v1/bid", BidDTO.class);
     }
 
 
